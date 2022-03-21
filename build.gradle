@@ -38,8 +38,8 @@ dependencies {
     compileOnly "com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT"
     //compileOnly "com.comphenix.protocol:ProtocolLib:4.7.0"
     //compileOnly name: "patched_1.16.5"
-    //implementation "dev.kotx:flylib-reloaded:latest.release"
-    //implementation 'com.github.TeamKun:ConfigLib:latest.release'
+    implementation "dev.kotx:flylib-reloaded:latest.release"
+    implementation 'com.github.TeamKun:ConfigLib:latest.release'
 }
 
 //import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
