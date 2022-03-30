@@ -60,7 +60,8 @@ public class Wall {
     for (Location location : list) {
 
       Block block = location.getBlock();
-      if (block.getType() == Material.AIR || block.getType() == Material.CAVE_AIR) {
+      if (block.getType() == Material.AIR || block.getType() == Material.CAVE_AIR
+          || block.getType() == Material.BARRIER) {
         Manager.blockSetTask.setBlock(block, Material.BARRIER);
       } else {
         Manager.blockSetTask.setBlock(block, Material.BEDROCK);

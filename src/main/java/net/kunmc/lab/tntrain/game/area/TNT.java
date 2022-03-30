@@ -4,21 +4,24 @@ import net.kunmc.lab.tntrain.TNTRain;
 import net.kunmc.lab.tntrain.game.Manager;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.TNTPrimed;
+import org.bukkit.entity.FallingBlock;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class TNT extends BukkitRunnable {
 
-  private TNTPrimed tnt;
+  private FallingBlock tnt;
+  private Location previousLocation;
   private boolean isBombed;
 
   public TNT(Location location) {
+    location.setY(TNTRain.config.ceilingHeight.value());
     Manager.blockSetTask.offer(
         new BukkitRunnable() {
           @Override
           public void run() {
-            tnt = (TNTPrimed) location.getWorld().spawnEntity(location, EntityType.PRIMED_TNT);
+            tnt = location.getWorld().spawnFallingBlock(location,
+                Material.TNT.createBlockData());
+            previousLocation = location;
           }
         }
     );
@@ -32,26 +35,28 @@ public class TNT extends BukkitRunnable {
 
   @Override
   public void run() {
-    this.tnt.setFuseTicks(1000);
-
     Location location = tnt.getLocation();
-    Material underBlockType = new Location(
-        tnt.getWorld(),
-        location.getBlockX(),
-        location.getBlockY() - 3,
-        location.getBlockZ())
-        .getBlock()
-        .getType();
 
-    if (underBlockType == Material.AIR ||
-        underBlockType == Material.CAVE_AIR) {
-      return;
+    // 前回からの落下距離を取得
+    double fallDistance = previousLocation.distance(location);
+
+    if (fallDistance != 0) {
+      this.previousLocation = location;
+    } else {
+      // 爆破
+      this.isBombed = true;
+      Manager.blockSetTask.offer(
+          new BukkitRunnable() {
+            @Override
+            public void run() {
+              tnt.setTicksLived(1000);
+              location.getBlock().setType(Material.AIR);
+              location.getWorld().createExplosion(location, TNTRain.config.explosivePower.value());
+            }
+          }
+      );
+      cancel();
     }
-
-    // 爆破
-    this.tnt.setFuseTicks(0);
-    this.isBombed = true;
-    cancel();
   }
 
   public boolean isBombed() {

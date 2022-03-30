@@ -35,10 +35,6 @@ public class Game extends BukkitRunnable {
     }.runTaskAsynchronously(TNTRain.plugin);
   }
 
-  public void setArea(int size) {
-    this.area = new Area(size);
-  }
-
   public boolean existsArea() {
     return this.area != null;
   }

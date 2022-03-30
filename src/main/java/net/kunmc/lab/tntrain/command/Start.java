@@ -1,7 +1,7 @@
 package net.kunmc.lab.tntrain.command;
 
-import dev.kotx.flylib.command.Command;
-import dev.kotx.flylib.command.CommandContext;
+import net.kunmc.lab.commandlib.Command;
+import net.kunmc.lab.commandlib.CommandContext;
 import net.kunmc.lab.tntrain.game.Manager;
 import org.jetbrains.annotations.NotNull;
 

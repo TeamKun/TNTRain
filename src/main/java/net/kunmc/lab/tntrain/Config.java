@@ -14,11 +14,12 @@ public class Config extends BaseConfig {
   public LocationValue center = new LocationValue(null);
   public IntegerValue areaSize = new IntegerValue(64);
   public BooleanValue doDeleteWater = new BooleanValue(true);
-  public DoubleValue rainfallRate = new DoubleValue(20.0);
+  public DoubleValue rainfallRate = new DoubleValue(1.0);
+  public IntegerValue explosivePower = new IntegerValue(4);
+  public IntegerValue ceilingHeight = new IntegerValue(255);
 
   public Config(@NotNull Plugin plugin) {
     super(plugin);
-    center.onModify((location) -> Manager.setArea(location));
-    areaSize.onModify((integer) -> Manager.setArea(integer));
+    center.onModify(Manager::setArea);
   }
 }

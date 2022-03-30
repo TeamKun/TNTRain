@@ -1,8 +1,10 @@
 package net.kunmc.lab.tntrain;
 
-import dev.kotx.flylib.FlyLib;
+import net.kunmc.lab.commandlib.CommandLib;
 import net.kunmc.lab.configlib.ConfigCommandBuilder;
 import net.kunmc.lab.tntrain.command.Main;
+import net.kunmc.lab.tntrain.game.Limit;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class TNTRain extends JavaPlugin {
@@ -16,12 +18,9 @@ public final class TNTRain extends JavaPlugin {
     plugin = this;
 
     config = new Config(this);
-    config.saveConfigIfAbsent();
-    config.loadConfig();
 
-    FlyLib.create(this, builder -> {
-      builder.command(new Main(new ConfigCommandBuilder(config).build()));
-    });
+    CommandLib.register(this, new Main(new ConfigCommandBuilder(config).build()));
+    Bukkit.getPluginManager().registerEvents(new Limit(), this);
   }
 
   @Override
