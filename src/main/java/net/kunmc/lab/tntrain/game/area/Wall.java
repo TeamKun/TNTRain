@@ -19,7 +19,8 @@ public class Wall {
       Material.SEAGRASS,
       Material.TALL_SEAGRASS,
       Material.KELP,
-      Material.KELP_PLANT);
+      Material.KELP_PLANT,
+      Material.LAVA);
 
   public Wall(Location vertex, int size) {
 
