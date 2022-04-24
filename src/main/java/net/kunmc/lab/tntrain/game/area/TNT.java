@@ -35,6 +35,11 @@ public class TNT extends BukkitRunnable {
 
   @Override
   public void run() {
+    if (this.tnt == null) {
+      cancel();
+      return;
+    }
+
     Location location = tnt.getLocation();
 
     // 前回からの落下距離を取得
