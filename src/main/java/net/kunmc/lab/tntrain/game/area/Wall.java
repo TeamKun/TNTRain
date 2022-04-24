@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import net.kunmc.lab.tntrain.TNTRain;
 import net.kunmc.lab.tntrain.game.Manager;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -57,7 +56,6 @@ public class Wall {
   }
 
   void setBlock() {
-    Bukkit.getLogger().info(String.valueOf(list.size()));
     for (Location location : list) {
 
       Block block = location.getBlock();
