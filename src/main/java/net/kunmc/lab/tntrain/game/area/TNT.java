@@ -35,32 +35,31 @@ public class TNT extends BukkitRunnable {
 
   @Override
   public void run() {
-    if (this.tnt == null) {
-      cancel();
-      return;
-    }
+    try {
+      Location location = tnt.getLocation();
 
-    Location location = tnt.getLocation();
+      // 前回からの落下距離を取得
+      double fallDistance = previousLocation.distance(location);
 
-    // 前回からの落下距離を取得
-    double fallDistance = previousLocation.distance(location);
-
-    if (fallDistance != 0) {
-      this.previousLocation = location;
-    } else {
-      // 爆破
-      this.isBombed = true;
-      Manager.blockSetTask.offer(
-          new BukkitRunnable() {
-            @Override
-            public void run() {
-              tnt.setTicksLived(1000);
-              location.getBlock().setType(Material.AIR);
-              location.getWorld().createExplosion(location, TNTRain.config.explosivePower.value());
+      if (fallDistance != 0) {
+        this.previousLocation = location;
+      } else {
+        // 爆破
+        this.isBombed = true;
+        Manager.blockSetTask.offer(
+            new BukkitRunnable() {
+              @Override
+              public void run() {
+                tnt.setTicksLived(1000);
+                location.getBlock().setType(Material.AIR);
+                location.getWorld()
+                    .createExplosion(location, TNTRain.config.explosivePower.value());
+              }
             }
-          }
-      );
-      cancel();
+        );
+        cancel();
+      }
+    } catch (Exception e) {
     }
   }
 
